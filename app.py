@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import os
 
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "Home page"
+    return render_template('index.html')
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -29,7 +29,7 @@ def create():
                         return "ID must be unique"
 
                 file = open("Data", "a")
-                data = id + "," + name + "," + quantity + "," + price+'\n'
+                data = id + "," + name + "," + quantity + "," + price + '\n'
                 file.write(data)
                 file.close()
 
@@ -37,7 +37,7 @@ def create():
 
             else:
                 file = open("Data", "w")
-                data = id + "," + name + "," + quantity + "," + price+'\n'
+                data = id + "," + name + "," + quantity + "," + price + '\n'
                 file.write(data)
                 file.close()
 
