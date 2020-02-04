@@ -56,6 +56,11 @@ def view():
     return render_template('index.html')
 
 
+@app.route('/edit_page', methods=['GET', 'POST'])
+def edit_page():
+    return render_template('edit.html')
+
+
 @app.route('/get_table', methods=['GET', 'POST'])
 @cross_origin()
 def get_table():
@@ -77,6 +82,20 @@ def get_table():
 
         else:
             return "No data"
+
+
+@app.route('/edit', methods=['POST', 'GET'])
+def edit():
+    if request.method == 'POST':
+        id = request.form['id']
+        with open('Data') as f:
+            L = f.read()
+
+        for i in L.split('\n'):
+            if i.split(',')[0] == id:
+                edit_data_dict = {'name': i.split(',')[1], 'quantity': i.split(',')[2], 'price': i.split(',')[3]}
+
+        return jsonify(edit_data_dict)
 
 
 if __name__ == '__main__':
