@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>create page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
+
+<p><a href="{{ url_for('view') }}">View Product</a></p>
 
 <form action="http://localhost:5000/create" method="post">
     <p>ID:</p>
@@ -19,9 +22,22 @@
     <p>Price:</p>
     <p><input type="text" name="price"/></p>
 
-    <p><input type = "submit" value = "submit" /></p>
+    <p><input type="submit" value="submit"/></p>
 
 </form>
+
+<script>
+    $(document).ready(function(){
+   var $form = $('form');
+   $form.submit(function(){
+      $.post($(this).attr('action'), $(this).serialize(), function(response){
+
+      },'json');
+      return false;
+   });
+});
+
+</script>
 
 
 </body>

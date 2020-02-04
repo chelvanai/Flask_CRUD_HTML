@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 import os
+from flask_cors import cross_origin
 
 app = Flask(__name__)
 
@@ -10,6 +11,7 @@ def main():
 
 
 @app.route('/create', methods=['GET', 'POST'])
+@cross_origin()
 def create():
     if request.method == 'POST':
         id = request.form['id']
@@ -47,6 +49,11 @@ def create():
 @app.route('/create_page', methods=['GET', 'POST'])
 def create_page():
     return render_template('create.html')
+
+
+@app.route('/view', methods=['GET','POST'])
+def view():
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
