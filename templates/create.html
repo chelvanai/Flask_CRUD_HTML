@@ -9,7 +9,7 @@
 
 <p><a href="{{ url_for('view') }}">View Product</a></p>
 
-<form action="http://localhost:5000/create" method="post">
+<form name="new_post" action="http://localhost:5000/create" method="post">
     <p>ID:</p>
     <p><input type="text" name="id"/></p>
 
@@ -27,15 +27,6 @@
 </form>
 
 <script>
-    $(document).ready(function(){
-   var $form = $('form');
-   $form.submit(function(){
-      $.post($(this).attr('action'), $(this).serialize(), function(response){
-
-      },'json');
-      return false;
-   });
-});
 
 </script>
 

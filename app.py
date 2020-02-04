@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 import os
 from flask_cors import cross_origin
 
@@ -51,9 +51,32 @@ def create_page():
     return render_template('create.html')
 
 
-@app.route('/view', methods=['GET','POST'])
+@app.route('/view', methods=['GET', 'POST'])
 def view():
     return render_template('index.html')
+
+
+@app.route('/get_table', methods=['GET', 'POST'])
+@cross_origin()
+def get_table():
+    if request.method == 'GET':
+        if os.path.isfile('Data'):
+            with open('Data') as f:
+                data = f.read()
+
+            data = data.split('\n')
+            final_data = []
+
+            for i in data:
+                if i is not '':
+                    data_dict = {'id': i.split(',')[0], 'name': i.split(',')[1], 'quantity': i.split(',')[2],
+                                 'price': i.split(',')[3]}
+                    final_data.append(data_dict)
+
+            return jsonify(final_data)
+
+        else:
+            return "No data"
 
 
 if __name__ == '__main__':

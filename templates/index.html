@@ -3,16 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+table {
+    width: 50%;
+}
+th {
+    background: #f1f1f1;
+    font-weight: bold;
+    padding: 6px;
+}
+td {
+    background: #f9f9f9;
+    padding: 6px;
+}
+
+    </style>
 </head>
 <body>
-<form>
-
-    <p><a href="{{ url_for('create_page') }}">Create New Product</a></p>
-
-</form>
 
 
+<p><a href="{{ url_for('create_page') }}">Create New Product</a></p>
 
+<table id="myTable">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+</table>
+
+<script type="text/javascript">
+$.ajax({
+    url: 'http://127.0.0.1:5000/get_table',
+    dataType: 'json',
+    success: function(data) {
+        for (var i=0; i<data.length; i++) {
+        console.log(data[0]);
+            var row = $('<tr><td>' + data[i].ID+ '</td><td>' + data[i].Name + '</td><td>' + data[i].Price +'</td><td>' + data[i].Quantity + '</td></tr>');
+            $('#myTable').append(row);
+        }
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+        alert('Error: ' + textStatus + ' - ' + errorThrown);
+    }
+});
+</script>
 
 
 </body>
