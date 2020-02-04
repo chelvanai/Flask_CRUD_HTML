@@ -44,5 +44,10 @@ def create():
                 return "successfully written"
 
 
+@app.route('/create_page', methods=['GET', 'POST'])
+def create_page():
+    return render_template('create.html')
+
+
 if __name__ == '__main__':
     app.run()

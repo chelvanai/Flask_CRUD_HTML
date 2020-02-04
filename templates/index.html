@@ -6,20 +6,13 @@
 </head>
 <body>
 <form>
-    <input type="button" id="create"/>
+
+    <p><a href="{{ url_for('create_page') }}">Create New Product</a></p>
+
 </form>
 
 
 
-<script>
-  //get a reference to the element
-  var myBtn = document.getElementById('create');
-
-  //add event listener
-  myBtn.addEventListener('click', function(event) {
-    window.location.href='create.html';
-  });
-</script>
 
 
 </body>
