@@ -56,9 +56,9 @@ def view():
     return render_template('index.html')
 
 
-@app.route('/edit_page', methods=['GET', 'POST'])
-def edit_page():
-    return render_template('edit.html')
+@app.route('/search_page', methods=['GET', 'POST'])
+def search_page():
+    return render_template('search.html')
 
 
 @app.route('/get_table', methods=['GET', 'POST'])
@@ -84,18 +84,24 @@ def get_table():
             return "No data"
 
 
-@app.route('/edit', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST', 'GET'])
+@cross_origin()
 def edit():
     if request.method == 'POST':
-        id = request.form['id']
+        name = request.form['name']
         with open('Data') as f:
             L = f.read()
 
-        for i in L.split('\n'):
-            if i.split(',')[0] == id:
-                edit_data_dict = {'name': i.split(',')[1], 'quantity': i.split(',')[2], 'price': i.split(',')[3]}
+        search_final_data = []
 
-        return jsonify(edit_data_dict)
+        for i in L.split('\n'):
+            if i is not '':
+                if i.split(',')[1] == name:
+                    search_data_dict = {'id': i.split(',')[0], 'name': i.split(',')[1], 'quantity': i.split(',')[2],
+                                      'price': i.split(',')[3]}
+                    search_final_data.append(search_data_dict)
+
+        return jsonify(search_final_data)
 
 
 if __name__ == '__main__':

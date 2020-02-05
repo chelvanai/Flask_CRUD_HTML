@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home page</title>
+    <title>search</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
 table {
@@ -18,17 +18,19 @@ td {
     padding: 6px;
 }
 
-
     </style>
+
 </head>
 <body>
 
+<p><a href="{{ url_for('view') }}">View Product</a></p>
 
-<p>
-    <a href="{{ url_for('create_page') }}">Create New Product</a>
+<form name="search_post" method="post">
+    <p>Name:</p>
+    <p><input type="text" name="name" id="name"/></p>
+</form>
 
-    <a href="{{ url_for('search_page') }}">Search Product</a>
-</p>
+ <button onclick="myFunction()">Click me</button>
 
 <table id="myTable">
     <tr>
@@ -39,10 +41,17 @@ td {
     </tr>
 </table>
 
-<script type="text/javascript">
-$.ajax({
-    url: 'http://127.0.0.1:5000/get_table',
+
+<script>
+    function myFunction() {
+    $("#myTable td").remove();
+    var nameValue = document.getElementById("name").value;
+    var formData = {name:nameValue};
+   $.ajax({
+    url: 'http://127.0.0.1:5000/search',
     dataType: 'json',
+    type: "POST",
+    data : formData,
     success: function(data) {
         for (var i=0; i<data.length; i++) {
             var row = $('<tr><td>' + data[i].id + '</td><td>' + data[i].name + '</td><td>' + data[i].price +'</td><td>' + data[i].quantity + '</td></tr>');
@@ -53,6 +62,9 @@ $.ajax({
         alert('Error: ' + textStatus + ' - ' + errorThrown);
     }
 });
+   return true;
+}
+
 
 </script>
 
