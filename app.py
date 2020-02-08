@@ -22,15 +22,15 @@ def create():
         if id is "":
             return "ID must be filled"
         else:
-            if os.path.isfile('Data'):
-                with open('Data') as f:
+            if os.path.isfile('product_list.txt'):
+                with open('product_list.txt') as f:
                     L = f.read()
 
                 for i in L.split('\n'):
                     if i.split(',')[0] == id:
                         return "ID must be unique"
 
-                file = open("Data", "a")
+                file = open("product_list.txt", "a")
                 data = id + "," + name + "," + quantity + "," + price + '\n'
                 file.write(data)
                 file.close()
@@ -38,7 +38,7 @@ def create():
                 return "successfully written"
 
             else:
-                file = open("Data", "w")
+                file = open("product_list.txt", "w")
                 data = id + "," + name + "," + quantity + "," + price + '\n'
                 file.write(data)
                 file.close()
@@ -65,8 +65,8 @@ def search_page():
 @cross_origin()
 def get_table():
     if request.method == 'GET':
-        if os.path.isfile('Data'):
-            with open('Data') as f:
+        if os.path.isfile('product_list.txt'):
+            with open('product_list.txt') as f:
                 data = f.read()
 
             data = data.split('\n')
@@ -89,7 +89,7 @@ def get_table():
 def edit():
     if request.method == 'POST':
         name = request.form['name']
-        with open('Data') as f:
+        with open('product_list.txt') as f:
             L = f.read()
 
         search_final_data = []
